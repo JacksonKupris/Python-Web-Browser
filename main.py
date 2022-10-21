@@ -6,8 +6,6 @@ from PyQt5.QtWebEngineWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtPrintSupport import *
 
-homepage = 'https://www.google.com'
-
 
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
@@ -16,6 +14,7 @@ class MainWindow(QMainWindow):
         self.showMaximized()
 
         navbar = QToolBar()
+        navbar.setIconSize(QSize(16,16))
         self.addToolBar(navbar)
 
         self.tabs = QTabWidget()
@@ -29,24 +28,25 @@ class MainWindow(QMainWindow):
         self.status = QStatusBar()
         self.setStatusBar(self.status)
 
-        back_btn = QAction('Back', self)
+        back_btn = QAction(QIcon(os.path.join('icons', 'back_arrow16px.png')),'Back', self)
         back_btn.setStatusTip('Go back a page')
-        back_btn.triggered.connect(lambda: self.tabs.currentWidget().back())
+        back_btn.triggered.connect(
+            lambda: self.tabs.currentWidget().back())
         navbar.addAction(back_btn)
 
-        forward_btn = QAction('Forward', self)
+        forward_btn = QAction(QIcon(os.path.join('icons', 'forward_arrow16px.png')),'Forward', self)
         forward_btn.setStatusTip('Go forward a page')
         forward_btn.triggered.connect(
             lambda: self.tabs.currentWidget().forward())
         navbar.addAction(forward_btn)
 
-        reload_btn = QAction('Reload', self)
+        reload_btn = QAction(QIcon(os.path.join('icons','refresh_icon16px.png')),'Reload', self)
         reload_btn.setStatusTip('Refresh')
         reload_btn.triggered.connect(
             lambda: self.tabs.currentWidget().reload())
         navbar.addAction(reload_btn)
 
-        home_btn = QAction('Home', self)
+        home_btn = QAction(QIcon(os.path.join('icons', 'home_icon16px.png')),'Home', self)
         home_btn.setStatusTip('Home')
         home_btn.triggered.connect(self.navigate_home)
         navbar.addAction(home_btn)
@@ -55,13 +55,13 @@ class MainWindow(QMainWindow):
         self.url_bar.returnPressed.connect(self.navigate_to_url)
         navbar.addWidget(self.url_bar)
 
-        self.add_new_tab(QUrl(homepage), 'New Tab')
+        self.add_new_tab(QUrl('https://www.google.com'), 'New Tab')
 
         self.show()
 
     def add_new_tab(self, qurl=None, label='Blank'):
         if qurl is None:
-            qurl = QUrl(homepage)
+            qurl = QUrl('https://www.google.com')
 
         browser = QWebEngineView()
         browser.setUrl(qurl)
@@ -96,7 +96,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("%s" % title)
 
     def navigate_home(self):
-        self.tabs.currentWidget().setUrl(QUrl(homepage))
+        self.tabs.currentWidget().setUrl(QUrl('https://www.google.com'))
 
     def navigate_to_url(self):
         qurl = QUrl(self.url_bar.text())
