@@ -14,7 +14,6 @@ class MainWindow(QMainWindow):
         self.showMaximized()
 
         navbar = QToolBar()
-        navbar.setIconSize(QSize(16,16))
         self.addToolBar(navbar)
 
         self.tabs = QTabWidget()
@@ -28,25 +27,25 @@ class MainWindow(QMainWindow):
         self.status = QStatusBar()
         self.setStatusBar(self.status)
 
-        back_btn = QAction(QIcon(os.path.join('icons', 'back_arrow16px.png')),'Back', self)
+        back_btn = QAction('Back', self)
         back_btn.setStatusTip('Go back a page')
         back_btn.triggered.connect(
             lambda: self.tabs.currentWidget().back())
         navbar.addAction(back_btn)
 
-        forward_btn = QAction(QIcon(os.path.join('icons', 'forward_arrow16px.png')),'Forward', self)
+        forward_btn = QAction('Forward', self)
         forward_btn.setStatusTip('Go forward a page')
         forward_btn.triggered.connect(
             lambda: self.tabs.currentWidget().forward())
         navbar.addAction(forward_btn)
 
-        reload_btn = QAction(QIcon(os.path.join('icons','refresh_icon16px.png')),'Reload', self)
+        reload_btn = QAction('Reload', self)
         reload_btn.setStatusTip('Refresh')
         reload_btn.triggered.connect(
             lambda: self.tabs.currentWidget().reload())
         navbar.addAction(reload_btn)
 
-        home_btn = QAction(QIcon(os.path.join('icons', 'home_icon16px.png')),'Home', self)
+        home_btn = QAction('Home', self)
         home_btn.setStatusTip('Home')
         home_btn.triggered.connect(self.navigate_home)
         navbar.addAction(home_btn)
